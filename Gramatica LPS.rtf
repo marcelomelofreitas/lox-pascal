@@ -1,0 +1,95 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046\deflangfe1046\deftab708{\fonttbl{\f0\froman\fprq2\fcharset0 Georgia;}{\f1\fmodern\fprq1\fcharset0 Consolas;}{\f2\fnil\fcharset1 Cambria Math;}{\f3\fswiss\fprq2\fcharset0 Calibri;}}
+{\colortbl ;\red34\green34\blue34;\red0\green0\blue255;\red0\green119\blue179;\red121\green121\blue120;\red0\green179\blue179;\red195\green142\blue34;\red221\green113\blue60;}
+{\*\generator Riched20 10.0.18362}{\*\mmathPr\mmathFont2\mnaryLim0\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
+\pard\widctlpar\sb1035\sl360\slmult0 {\cf1\b\f0\fs45{\field{\*\fldinst{HYPERLINK "http://www.craftinginterpreters.com/appendix-i.html#syntax-grammar"}}{\fldrslt{\ul\cf2\fs33 Gram\'e1tica de sintaxe}}}}\cf1\b\f0\fs45\lang1046\par
+\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\b0\fs24 A gram\'e1tica sint\'e1tica \'e9 usada para analisar a sequ\'eancia linear de tokens na estrutura da \'e1rvore de sintaxe aninhada. Come\'e7a com a primeira regra que corresponde a um programa sslang inteiro (ou a uma \'fanica entrada REPL):\cf3\f1\fs20\par
+\par
+program\cf4         \f2\u8594?\f1\lang1046  \cf3 declaration\cf4 * \cf5 EOF\cf4  ;\par
+
+\pard\widctlpar\sb1065\sl360\slmult0 {\cf1\b\i\f0\fs36{\field{\*\fldinst{HYPERLINK "http://www.craftinginterpreters.com/appendix-i.html#declarations"}}{\fldrslt{\ul\cf2 Declara\'e7\'f5es}}}}\cf1\b\i\f0\fs36\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\b0\i0\fs24\par
+Um programa \'e9 uma s\'e9rie de declara\'e7\'f5es, que s\'e3o as instru\'e7\'f5es que vinculam novos identificadores ou qualquer um dos outros tipos de instru\'e7\'e3o:\cf3\f1\fs20\par
+\par
+declaration\cf4     \f2\u8594?\f1\lang1046  \cf3 classDecl\cf4\par
+               | \cf3 funDecl\cf4\par
+               | \cf3 varDecl\cf4\par
+               | \cf3 statement\cf4  ;\par
+\par
+\cf3 classDecl\cf4       \f2\u8594?\f1\lang1046  \cf6 "class"\cf4  \cf5 IDENTIFIER\cf4  ( \cf6 "<"\cf4  \cf5 IDENTIFIER\cf4  )?\par
+                 \cf6 "\{"\cf4  \cf3 function\cf4 * \cf6 "\}"\cf4  ;\par
+\cf3 funDecl\cf4         \f2\u8594?\f1\lang1046  \cf6 "fun"\cf4  \cf3 function\cf4  ;\par
+\cf3 varDecl\cf4         \f2\u8594?\f1\lang1046  \cf6 "var"\cf4  \cf5 IDENTIFIER\cf4  ( \cf6 "="\cf4  \cf3 expression\cf4  )? \cf6 ";"\cf4  ;\par
+
+\pard\widctlpar\sb1065\sl360\slmult0 {\cf1\b\i\f0\fs36{\field{\*\fldinst{HYPERLINK "http://www.craftinginterpreters.com/appendix-i.html#statements"}}{\fldrslt{\ul\cf2 Comandos}}}}\cf1\b\i\f0\fs36\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\b0\i0\fs24\par
+As demais regras da instru\'e7\'e3o produzem efeitos colaterais, mas n\'e3o introduzem liga\'e7\'f5es:\par
+\cf3\f1\fs20\par
+statement\cf4       \f2\u8594?\f1\lang1046  \cf3 exprStmt\cf4\par
+               | \cf3 forStmt\cf4\par
+               | \cf3 ifStmt\cf4\par
+               | \cf3 printStmt\cf4\par
+               | \cf3 returnStmt\cf4\par
+               | \cf3 whileStmt\cf4\par
+               | \cf3 block\cf4  ;\par
+\par
+\cf3 exprStmt\cf4        \f2\u8594?\f1\lang1046  \cf3 expression\cf4  \cf6 ";"\cf4  ;\par
+\cf3 forStmt\cf4         \f2\u8594?\f1\lang1046  \cf6 "for"\cf4  \cf6 "("\cf4  ( \cf3 varDecl\cf4  | \cf3 exprStmt\cf4  | \cf6 ";"\cf4  )\par
+                           \cf3 expression\cf4 ? \cf6 ";"\cf4\par
+                           \cf3 expression\cf4 ? \cf6 ")"\cf4  \cf3 statement\cf4  ;\par
+\cf3 ifStmt\cf4          \f2\u8594?\f1\lang1046  \cf6 "if"\cf4  \cf6 "("\cf4  \cf3 expression\cf4  \cf6 ")"\cf4  \cf3 statement\cf4  ( \cf6 "else"\cf4  \cf3 statement\cf4  )? ;\par
+\cf3 printStmt\cf4       \f2\u8594?\f1\lang1046  \cf6 "print"\cf4  \cf3 expression\cf4  \cf6 ";"\cf4  ;\par
+\cf3 returnStmt\cf4      \f2\u8594?\f1\lang1046  \cf6 "return"\cf4  \cf3 expression\cf4 ? \cf6 ";"\cf4  ;\par
+\cf3 whileStmt\cf4       \f2\u8594?\f1\lang1046  \cf6 "while"\cf4  \cf6 "("\cf4  \cf3 expression\cf4  \cf6 ")"\cf4  \cf3 statement\cf4  ;\par
+\cf3 block\cf4           \f2\u8594?\f1\lang1046  \cf6 "\{"\cf4  \cf3 declaration\cf4 * \cf6 "\}"\cf4  ;\par
+
+\pard\widctlpar\sb1065\sl360\slmult0\cf1\f0\fs24 Observe que o bloco \'e9 uma regra de instru\'e7\'e3o, mas tamb\'e9m \'e9 usado como n\'e3o-terminal em algumas outras regras para coisas como corpos de fun\'e7\'e3o.\par
+\par
+\ul\b\i\fs36 Express\'f5es\ulnone\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\b0\i0\fs24\par
+Express\'f5es produzem valores. O Lox possui v\'e1rios operadores un\'e1rios e bin\'e1rios com diferentes n\'edveis de preced\'eancia. Algumas gram\'e1ticas para idiomas n\'e3o codificam diretamente os relacionamentos de preced\'eancia e especificam isso em outros lugares. Aqui, usamos uma regra separada para cada n\'edvel de preced\'eancia para torn\'e1-la expl\'edcita:\par
+\par
+\cf3\f1\fs20 expression\cf4      \f2\u8594?\f1\lang1046  \cf3 assignment\cf4  ;\par
+\par
+\cf3 assignment\cf4      \f2\u8594?\f1\lang1046  ( \cf3 call\cf4  \cf6 "."\cf4  )? \cf5 IDENTIFIER\cf4  \cf6 "="\cf4  \cf3 assignment\cf4\par
+               | \cf3 logic_or\cf4 ;\par
+\par
+\cf3 logic_or\cf4        \f2\u8594?\f1\lang1046  \cf3 logic_and\cf4  ( \cf6 "or"\cf4  \cf3 logic_and\cf4  )* ;\par
+\cf3 logic_and\cf4       \f2\u8594?\f1\lang1046  \cf3 equality\cf4  ( \cf6 "and"\cf4  \cf3 equality\cf4  )* ;\par
+\cf3 equality\cf4        \f2\u8594?\f1\lang1046  \cf3 comparison\cf4  ( ( \cf6 "!="\cf4  | \cf6 "=="\cf4  ) \cf3 comparison\cf4  )* ;\par
+\cf3 comparison\cf4      \f2\u8594?\f1\lang1046  \cf3 addition\cf4  ( ( \cf6 ">"\cf4  | \cf6 ">="\cf4  | \cf6 "<"\cf4  | \cf6 "<="\cf4  ) \cf3 addition\cf4  )* ;\par
+\cf3 addition\cf4        \f2\u8594?\f1\lang1046  \cf3 multiplication\cf4  ( ( \cf6 "-"\cf4  | \cf6 "+"\cf4  ) \cf3 multiplication\cf4  )* ;\par
+\cf3 multiplication\cf4  \f2\u8594?\f1\lang1046  \cf3 unary\cf4  ( ( \cf6 "/"\cf4  | \cf6 "*"\cf4  ) \cf3 unary\cf4  )* ;\par
+\par
+\cf3 unary\cf4           \f2\u8594?\f1\lang1046  ( \cf6 "!"\cf4  | \cf6 "-"\cf4  ) \cf3 unary\cf4  | \cf3 call\cf4  ;\par
+\cf3 call\cf4            \f2\u8594?\f1\lang1046  \cf3 primary\cf4  ( \cf6 "("\cf4  \cf3 arguments\cf4 ? \cf6 ")"\cf4  | \cf6 "."\cf4  \cf5 IDENTIFIER\cf4  )* ;\par
+\cf3 primary\cf4         \f2\u8594?\f1\lang1046  \cf6 "true"\cf4  | \cf6 "false"\cf4  | \cf6 "nil"\cf4  | \cf6 "this"\cf4\par
+               | \cf5 NUMBER\cf4  | \cf5 STRING\cf4  | \cf5 IDENTIFIER\cf4  | \cf6 "("\cf4  \cf3 expression\cf4  \cf6 ")"\cf4\par
+               | \cf6 "super"\cf4  \cf6 "."\cf4  \cf5 IDENTIFIER\cf4  ;\par
+
+\pard\widctlpar\sb1065\sl360\slmult0 {\cf1\b\i\f0\fs36{\field{\*\fldinst{HYPERLINK "http://www.craftinginterpreters.com/appendix-i.html#utility-rules"}}{\fldrslt{\ul\cf2 Regras de utilidade}}}}\cf1\b\i\f0\fs36 s\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\b0\i0\fs24\par
+Para manter as regras acima um pouco mais limpas, parte da gram\'e1tica \'e9 dividida em algumas regras auxiliares reutilizadas:\par
+\par
+\cf3\f1\fs20 function\cf4        \f2\u8594?\f1\lang1046  \cf5 IDENTIFIER\cf4  \cf6 "("\cf4  \cf3 parameters\cf4 ? \cf6 ")"\cf4  \cf3 block\cf4  ;\par
+\cf3 parameters\cf4      \f2\u8594?\f1\lang1046  \cf5 IDENTIFIER\cf4  ( \cf6 ","\cf4  \cf5 IDENTIFIER\cf4  )* ;\par
+\cf3 arguments\cf4       \f2\u8594?\f1\lang1046  \cf3 expression\cf4  ( \cf6 ","\cf4  \cf3 expression\cf4  )* ;\par
+
+\pard\widctlpar\sb1035\sl360\slmult0 {\cf1\b\f0\fs45{\field{\*\fldinst{HYPERLINK "http://www.craftinginterpreters.com/appendix-i.html#lexical-grammar"}}{\fldrslt{\ul\cf2 Lexical Grammar}}}}\cf1\b\f0\fs45\par
+
+\pard\widctlpar\sb360\sa360\b0\fs24 A gram\'e1tica lexical \'e9 usada pelo scanner para agrupar caracteres em tokens. Onde a sintaxe \'e9 livre de contexto, a gram\'e1tica lexical \'e9 regular - observe que n\'e3o h\'e1 regras recursivas.\par
+
+\pard\widctlpar\sl300\slmult0\tx916\tx1832\tx2748\tx3664\tx4580\tx5496\tx6412\tx7328\tx8244\tx9160\tx10076\tx10992\tx11908\tx12824\tx13740\tx14656\cf5\f1\fs20 NUMBER\cf4          \f2\u8594?\f1\lang1046  \cf5 DIGIT\cf4 + ( \cf6 "."\cf4  \cf5 DIGIT\cf4 + )? ;\par
+\cf5 STRING\cf4          \f2\u8594?\f1\lang1046  '\cf6 "' <any char except '"\cf4 '>* '"' ;\par
+\cf5 IDENTIFIER\cf4      \f2\u8594?\f1\lang1046  \cf5 ALPHA\cf4  ( \cf5 ALPHA\cf4  | \cf5 DIGIT\cf4  )* ;\par
+\cf5 ALPHA\cf4           \f2\u8594?\f1\lang1046  '\cf3 a\cf4 ' ... '\cf3 z\cf4 ' | '\cf5 A\cf4 ' ... '\cf5 Z\cf4 ' | '\cf3 _\cf4 ' ;\par
+\cf5 DIGIT\cf4           \f2\u8594?\f1\lang1046  '\cf7 0\cf4 ' ... '\cf7 9\cf4 ' ;\par
+
+\pard\widctlpar\sa160\sl252\slmult1\cf0\f3\fs22\par
+}
+ 

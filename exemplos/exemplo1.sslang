@@ -1,0 +1,14 @@
+class Rosquinha {
+  cozinhar() {
+    print "Frite ateh dourar.";
+  }
+}
+
+class CremeDeBoston < Rosquinha {
+  cozinhar() {
+    super.cozinhar();
+    print "Tubo cheio de creme e casaco com chocolate.";
+  }
+}
+
+CremeDeBoston().cozinhar();

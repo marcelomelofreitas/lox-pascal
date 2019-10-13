@@ -1,0 +1,25 @@
+﻿var i = 0;
+while (true)
+{
+	i = i + 1;
+	
+	print i;
+
+	if (i > 10) 
+	{
+		print "breaking";
+		break;
+	}
+
+	if (i > 5) 
+	{
+		print "continuing";
+		continue;
+	}
+
+	print "looping";
+}
+
+print "Complete";
+
+

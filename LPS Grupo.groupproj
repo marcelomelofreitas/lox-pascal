@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{942E64F9-4939-43B7-ACC5-61AB8F7F1EEA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="tool\generate_ast.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="src\lps.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="generate_ast">
+        <MSBuild Projects="tool\generate_ast.dproj"/>
+    </Target>
+    <Target Name="generate_ast:Clean">
+        <MSBuild Projects="tool\generate_ast.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="generate_ast:Make">
+        <MSBuild Projects="tool\generate_ast.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="lps">
+        <MSBuild Projects="src\lps.dproj"/>
+    </Target>
+    <Target Name="lps:Clean">
+        <MSBuild Projects="src\lps.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="lps:Make">
+        <MSBuild Projects="src\lps.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="generate_ast;lps"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="generate_ast:Clean;lps:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="generate_ast:Make;lps:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
